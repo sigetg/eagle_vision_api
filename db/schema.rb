@@ -10,9 +10,83 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_202500) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_14_220049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activity_offerings", force: :cascade do |t|
+    t.string "typeKey"
+    t.string "stateKey"
+    t.string "name"
+    t.jsonb "descr"
+    t.date "effectiveDate"
+    t.date "expirationDate"
+    t.string "formatOfferingId"
+    t.string "formatOfferingName"
+    t.string "activityId"
+    t.bigint "term_id", null: false
+    t.string "termCode"
+    t.string "activityCode"
+    t.string "scheduleIds", default: [], array: true
+    t.boolean "isHonorsOffering"
+    t.jsonb "instructors"
+    t.float "weeklyInclassContactHours"
+    t.float "weeklyOutofClassHours"
+    t.float "weeklyTotalContactHours"
+    t.integer "maximumEnrollment"
+    t.integer "minimumEnrollment"
+    t.boolean "isEvaluated"
+    t.string "activityOfferingUrl"
+    t.bigint "course_offering_id", null: false
+    t.string "courseOfferingTitle"
+    t.string "courseOfferingCode"
+    t.string "unitsDeploymentOrgIds", default: [], array: true
+    t.string "requisiteIds", default: [], array: true
+    t.string "coRequisiteIds", default: [], array: true
+    t.string "restrictionIds", default: [], array: true
+    t.jsonb "meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_offering_id"], name: "index_activity_offerings_on_course_offering_id"
+    t.index ["term_id"], name: "index_activity_offerings_on_term_id"
+  end
+
+  create_table "course_offerings", force: :cascade do |t|
+    t.string "typeKey"
+    t.string "stateKey"
+    t.date "effectiveDate"
+    t.date "expirationDate"
+    t.string "name"
+    t.jsonb "descr"
+    t.string "courseId"
+    t.bigint "term_id", null: false
+    t.string "courseCode"
+    t.string "courseOfferingCode"
+    t.string "subjectAreaId"
+    t.string "courseNumberSuffix"
+    t.string "courseOfferingTitle"
+    t.boolean "isHonorsOffering"
+    t.integer "maximumEnrollment"
+    t.integer "minimumEnrollment"
+    t.string "gradingOptionId"
+    t.string "studentRegistrationGradingOptionIds", default: [], array: true
+    t.string "creditOptionId"
+    t.jsonb "instructors"
+    t.string "unitsDeploymentOrgIds", default: [], array: true
+    t.string "requisiteIds", default: [], array: true
+    t.string "coRequisiteIds", default: [], array: true
+    t.string "restrictionIds", default: [], array: true
+    t.string "campusLocations", default: [], array: true
+    t.boolean "isEvaluated"
+    t.string "courseOfferingUrl"
+    t.string "gradeRosterDefinitionId"
+    t.string "gradingOptionIds", default: [], array: true
+    t.string "creditOptionIds", default: [], array: true
+    t.jsonb "meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term_id"], name: "index_course_offerings_on_term_id"
+  end
 
   create_table "people", force: :cascade do |t|
     t.string "typeKey"
@@ -88,6 +162,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_202500) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "activity_offerings", "course_offerings"
+  add_foreign_key "activity_offerings", "terms"
+  add_foreign_key "course_offerings", "terms"
   add_foreign_key "registration_request_items", "people"
   add_foreign_key "registration_request_items", "registration_requests"
   add_foreign_key "registration_requests", "people"
