@@ -1,33 +1,5 @@
-# Create sample People
-person1 = Person.create(
-  typeKey: "student",
-  stateKey: "active",
-  name: "John Doe",
-  descr: { "notes": "Sample student" },
-  pictureDocumentId: "abc123",
-  meta: { "key": "value" }
-)
-person2 = Person.create(
-  typeKey: "faculty",
-  stateKey: "active",
-  name: "Jane Smith",
-  descr: { "notes": "Sample faculty" },
-  pictureDocumentId: "def456",
-  meta: { "key": "value" }
-)
-
-# Create sample Terms
-term1 = Term.create(
-  typeKey: "academic",
-  stateKey: "active",
-  name: "Spring 2023",
-  descr: { "notes": "Sample term" },
-  code: "SP23",
-  startDate: Date.new(2023, 1, 15),
-  endDate: Date.new(2023, 5, 15),
-  meta: { "key": "value" }
-)
-term2 = Term.create(
+# Create sample Term
+term = Term.create(
   typeKey: "academic",
   stateKey: "active",
   name: "Fall 2023",
@@ -38,61 +10,128 @@ term2 = Term.create(
   meta: { "key": "value" }
 )
 
-# Create sample Registration Requests
-request1 = RegistrationRequest.create(
+# Create sample Course Offerings
+course_offering1 = CourseOffering.create(
   typeKey: "course",
-  stateKey: "pending",
-  effectiveDate: Date.new(2023, 1, 10),
-  expirationDate: Date.new(2023, 1, 20),
-  name: "Sample Request 1",
-  descr: { "notes": "Sample request" },
-  person: person1,
-  term: term1,
-  submittedDate: Date.new(2023, 1, 5),
-  processResults: { "status": "processing" },
-  itemStudentIds: "123,456",
-  itemStudentPopulationId: "population123",
-  meta: { "key": "value" }
-)
-request2 = RegistrationRequest.create(
-  typeKey: "course",
-  stateKey: "approved",
-  effectiveDate: Date.new(2023, 8, 1),
-  expirationDate: Date.new(2023, 8, 15),
-  name: "Sample Request 2",
-  descr: { "notes": "Sample request" },
-  person: person2,
-  term: term2,
-  submittedDate: Date.new(2023, 7, 20),
-  processResults: { "status": "completed" },
-  itemStudentIds: "789,101",
-  itemStudentPopulationId: "population456",
+  stateKey: "active",
+  effectiveDate: Date.new(2023, 8, 15),
+  expirationDate: Date.new(2023, 12, 15),
+  name: "Sample Course Offering 1",
+  descr: { "notes": "Sample course offering" },
+  courseId: "CSCI101",
+  term: term,
+  courseCode: "CS101",
+  courseOfferingCode: "CS101_F23",
+  subjectAreaId: "CS",
+  courseNumberSuffix: "101",
+  courseOfferingTitle: "Introduction to Computer Science",
+  isHonorsOffering: false,
+  maximumEnrollment: 50,
+  minimumEnrollment: 10,
+  gradingOptionId: "A-F",
+  studentRegistrationGradingOptionIds: ["A-F"],
+  creditOptionId: "3-credits",
+  instructors: [{ "name": "Prof. Smith" }],
+  unitsDeploymentOrgIds: ["CSDept"],
+  requisiteIds: ["CSCI100"],
+  restrictionIds: ["registration_restriction_123"],
+  campusLocations: ["Main Campus"],
+  isEvaluated: true,
+  courseOfferingUrl: "https://example.com/cs101",
   meta: { "key": "value" }
 )
 
-# Create sample Registration Request Items
-RegistrationRequestItem.create(
-  typeKey: "item",
-  stateKey: "pending",
-  effectiveDate: Date.new(2023, 1, 10),
-  expirationDate: Date.new(2023, 1, 20),
-  name: "Item 1",
-  descr: { "notes": "Sample item" },
-  registration_request: request1,
-  person: person1,
-  requestedEffectiveDate: Date.new(2023, 1, 10),
-  existingRegistrationId: "reg123",
-  existingActivityOfferingId: "activity123",
-  preferredActivityOfferingIds: "activity456,activity789",
-  preferredFormatOfferingIds: "format123",
-  preferredRegistrationGroupIds: "group123,group456",
-  preferredCredits: 3.0,
-  preferredGradingOptionIds: "grading123",
-  processResults: { "status": "processing" },
-  resultingRegistrationId: "reg456",
-  courseWaitlistEntryId: "waitlist123",
-  processingPriority: 1,
-  lastAttendanceDate: Date.new(2023, 1, 15),
-  notificationDate: Date.new(2023, 1, 8),
+course_offering2 = CourseOffering.create(
+  typeKey: "course",
+  stateKey: "active",
+  effectiveDate: Date.new(2023, 8, 15),
+  expirationDate: Date.new(2023, 12, 15),
+  name: "Sample Course Offering 2",
+  descr: { "notes": "Sample course offering" },
+  courseId: "MATH201",
+  term: term,
+  courseCode: "MAT201",
+  courseOfferingCode: "MAT201_F23",
+  subjectAreaId: "MATH",
+  courseNumberSuffix: "201",
+  courseOfferingTitle: "Calculus II",
+  isHonorsOffering: true,
+  maximumEnrollment: 40,
+  minimumEnrollment: 5,
+  gradingOptionId: "A-F",
+  studentRegistrationGradingOptionIds: ["A-F"],
+  creditOptionId: "4-credits",
+  instructors: [{ "name": "Dr. Johnson" }],
+  unitsDeploymentOrgIds: ["MathDept"],
+  requisiteIds: ["MATH101"],
+  restrictionIds: ["registration_restriction_456"],
+  campusLocations: ["Main Campus"],
+  isEvaluated: true,
+  courseOfferingUrl: "https://example.com/mat201",
+  meta: { "key": "value" }
+)
+
+# Create sample Activity Offerings
+activity_offering1 = ActivityOffering.create(
+  typeKey: "activity",
+  stateKey: "active",
+  name: "Sample Activity Offering 1",
+  descr: { "notes": "Sample activity offering" },
+  effectiveDate: Date.new(2023, 8, 15),
+  expirationDate: Date.new(2023, 12, 15),
+  formatOfferingId: "format123",
+  formatOfferingName: "Lecture",
+  activityId: "lecture123",
+  term: term,
+  termCode: "FA23",
+  activityCode: "LEC101",
+  scheduleIds: ["schedule123"],
+  isHonorsOffering: false,
+  instructors: [{ "name": "Prof. Smith" }],
+  weeklyInclassContactHours: 3.0,
+  weeklyOutofClassHours: 2.0,
+  weeklyTotalContactHours: 5.0,
+  maximumEnrollment: 50,
+  minimumEnrollment: 10,
+  isEvaluated: true,
+  activityOfferingUrl: "https://example.com/lec101",
+  course_offering: course_offering1,
+  courseOfferingTitle: "Introduction to Computer Science",
+  courseOfferingCode: "CS101_F23",
+  unitsDeploymentOrgIds: ["CSDept"],
+  requisiteIds: ["CSCI100"],
+  restrictionIds: ["registration_restriction_123"],
+  meta: { "key": "value" }
+)
+
+activity_offering2 = ActivityOffering.create(
+  typeKey: "activity",
+  stateKey: "active",
+  name: "Sample Activity Offering 2",
+  descr: { "notes": "Sample activity offering" },
+  effectiveDate: Date.new(2023, 8, 15),
+  expirationDate: Date.new(2023, 12, 15),
+  formatOfferingId: "format456",
+  formatOfferingName: "Lab",
+  activityId: "lab123",
+  term: term,
+  termCode: "FA23",
+  activityCode: "LAB201",
+  scheduleIds: ["schedule456"],
+  isHonorsOffering: false,
+  instructors: [{ "name": "Dr. Johnson" }],
+  weeklyInclassContactHours: 2.0,
+  weeklyOutofClassHours: 3.0,
+  weeklyTotalContactHours: 5.0,
+  maximumEnrollment: 30,
+  minimumEnrollment: 5,
+  isEvaluated: true,
+  activityOfferingUrl: "https://example.com/lab201",
+  course_offering: course_offering2,
+  courseOfferingTitle: "Calculus II",
+  courseOfferingCode: "MAT201_F23",
+  unitsDeploymentOrgIds: ["MathDept"],
+  requisiteIds: ["MATH101"],
+  restrictionIds: ["registration_restriction_456"],
   meta: { "key": "value" }
 )
