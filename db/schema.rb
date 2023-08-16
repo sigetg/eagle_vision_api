@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_220049) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_16_131856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -125,6 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_220049) do
     t.jsonb "meta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "activity_offering_id", null: false
+    t.index ["activity_offering_id"], name: "index_registration_request_items_on_activity_offering_id"
     t.index ["person_id"], name: "index_registration_request_items_on_person_id"
     t.index ["registration_request_id"], name: "index_registration_request_items_on_registration_request_id"
   end
@@ -136,7 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_220049) do
     t.date "expirationDate"
     t.string "name"
     t.jsonb "descr"
-    t.bigint "person_id", null: false
+    t.bigint "person_id"
     t.bigint "term_id", null: false
     t.date "submittedDate"
     t.jsonb "processResults"
@@ -165,6 +167,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_220049) do
   add_foreign_key "activity_offerings", "course_offerings"
   add_foreign_key "activity_offerings", "terms"
   add_foreign_key "course_offerings", "terms"
+  add_foreign_key "registration_request_items", "activity_offerings"
   add_foreign_key "registration_request_items", "people"
   add_foreign_key "registration_request_items", "registration_requests"
   add_foreign_key "registration_requests", "people"

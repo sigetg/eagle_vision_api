@@ -3,8 +3,13 @@ class CourseOfferingsController < ApplicationController
 
   # GET /course_offerings
   def index
-    @course_offerings = CourseOffering.all
-
+    if params[:key]
+      #Easy to add other fields to search, but not when courseCode is auto decapitalized and not recognized in ActiveRecord
+      # Just add 'or courseCode LIKE ?' to see what I mean plus another params[:key]
+      @course_offerings = CourseOffering.where("name LIKE ?", params[:key])
+    else
+      @course_offerings = CourseOffering.all
+    end
     render json: @course_offerings
   end
 

@@ -3,7 +3,8 @@ class ActivityOfferingsController < ApplicationController
 
   # GET /activity_offerings
   def index
-    @activity_offerings = ActivityOffering.all
+    course_offering = CourseOffering.find(params[:course_offering_id])
+    @activity_offerings = course_offering.activity_offerings
 
     render json: @activity_offerings
   end

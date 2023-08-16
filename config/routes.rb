@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
-  resources :activity_offerings
-  resources :course_offerings
-  resources :terms
-  resources :people do
-    resources :registration_request_items
+  resources :course_offerings do
+    resources :activity_offerings
   end
+  resources :activity_offerings
+  resources :terms
+  resources :people
+  resources :registration_request_items do
+    resources :activity_offerings
+  end
+
   resources :registration_requests do
     resources :registration_request_items
   end

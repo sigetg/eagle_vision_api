@@ -3,7 +3,9 @@ class RegistrationRequestItemsController < ApplicationController
 
   # GET /registration_request_items
   def index
-    @registration_request_items = RegistrationRequestItem.all
+    registration_request = RegistrationRequest.find(params[:registration_request_id])
+    @registration_request_items = registration_request.registration_request_items
+    # @registration_request_items = RegistrationRequestItem.all
 
     render json: @registration_request_items
   end
@@ -46,6 +48,6 @@ class RegistrationRequestItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def registration_request_item_params
-      params.require(:registration_request_item).permit(:typeKey, :stateKey, :effectiveDate, :expirationDate, :name, :descr, :registration_request_id, :user_id, :requestedEffectiveDate, :existingRegistrationId, :existingActivityOfferingId, :preferredActivityOfferingIds, :preferredFormatOfferingIds, :preferredRegistrationGroupIds, :preferredCredits, :preferredGradingOptionIds, :processResults, :resultingRegistrationId, :courseWaitlistEntryId, :processingPriority, :lastAttendanceDate, :notificationDate, :meta)
+      params.require(:registration_request_item).permit(:typeKey, :stateKey, :effectiveDate, :expirationDate, :name, :descr, :registration_request_id, :person_id, :requestedEffectiveDate, :existingRegistrationId, :existingActivityOfferingId, :preferredActivityOfferingIds, :preferredFormatOfferingIds, :preferredRegistrationGroupIds, :preferredCredits, :preferredGradingOptionIds, :processResults, :resultingRegistrationId, :courseWaitlistEntryId, :processingPriority, :lastAttendanceDate, :notificationDate, :meta, :activity_offering_id)
     end
 end

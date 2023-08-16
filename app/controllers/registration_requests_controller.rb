@@ -3,7 +3,11 @@ class RegistrationRequestsController < ApplicationController
 
   # GET /registration_requests
   def index
-    @registration_requests = RegistrationRequest.all
+    if params[:person_id]
+      @registration_requests = RegistrationRequest.where(person_id: params[:person_id])
+    else
+      @registration_requests = RegistrationRequest.all
+    end
 
     render json: @registration_requests
   end
@@ -46,6 +50,6 @@ class RegistrationRequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def registration_request_params
-      params.require(:registration_request).permit(:typeKey, :stateKey, :effectiveDate, :expirationDate, :name, :descr, :user_id, :term_id, :submittedDate, :processResults, :itemStudentIds, :itemStudentPopulationId, :meta)
+      params.require(:registration_request).permit(:typeKey, :stateKey, :effectiveDate, :expirationDate, :name, :descr, :person_id, :term_id, :submittedDate, :processResults, :itemStudentIds, :itemStudentPopulationId, :meta, :id, :updatedAt, :createdAt)
     end
 end
